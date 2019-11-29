@@ -1,3 +1,3 @@
 # redux-infinity-state
 
-redux-infinity-state reducer your redux boilerplate
+## A package for reducing redux boilerplate
