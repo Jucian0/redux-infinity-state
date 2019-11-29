@@ -31,11 +31,20 @@ export interface Context<TState> {
     methods: Methods<TState>;
     services?: Services<TState>;
 }
-
+/**
+ * @param  {inferP} ...args
+ * @returns never
+ */
 type GetParams<T> = T extends (...args: infer P) => any ? P : never;
-
+/**
+ * @param  {GetParams<T>[1]} payload
+ * @returns string
+ */
 type WithPayload<T> = (payload: GetParams<T>[1]) => { payload: GetParams<T>[1], type: string }
-
+/**
+ * @param  {string}} =>{type
+ * @returns string
+ */
 type WithoutPayload = () => { type: string }
 
 type TAction<TA> = GetParams<TA>[1] extends undefined ? WithoutPayload : WithPayload<TA>
@@ -55,6 +64,8 @@ export type Action<TP> = { type: string, payload?: TP, dispatch: Dispatch }
  * 
  * CreateState automatically generate actions for methods and services.
  * 
+ *
+ * @param  {TypeContext} context
  */
 export function createState<TypeContext extends
     Context<TypeContext["state"]>>(context: TypeContext) {
@@ -66,7 +77,9 @@ export function createState<TypeContext extends
     const actions: Actions<TypeContext["methods"]> = Object.assign({})
     const effects: Actions<TypeContext["services"]> = Object.assign({})
 
-
+    /**
+     * @param  {TypeContext["methods"]} methods
+     */
     const actionCreator = (methods: TypeContext["methods"]) => {
         let actionsL = Object.assign({}, actions) as any
         for (let method in methods) {
@@ -77,7 +90,9 @@ export function createState<TypeContext extends
 
         return Object.assign(ac, actionsL) as Actions<TypeContext["methods"]>
     }
-
+    /**
+     * @param  {TypeContext["services"]} methods
+     */
     const effectCreator = (methods: TypeContext["services"]) => {
         let effectsL = Object.assign({}, effects) as any
         for (let method in methods) {
@@ -88,7 +103,10 @@ export function createState<TypeContext extends
 
         return Object.assign(ef, effectsL) as Actions<TypeContext["services"]>
     }
-
+    /**
+     * @param  {TypeContext["state"]=context.state} state
+     * @param  {any} action
+     */
     return {
         reducer: (state: TypeContext["state"] = context.state, action: any) =>
             createReducer(

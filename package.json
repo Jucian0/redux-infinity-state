@@ -7,7 +7,7 @@
   "module": "build/module/index.js",
   "repository": "https://github.com/jucian0/redux-infinity-state",
   "license": "MIT",
-  "keywords": [],
+  "keywords": ["redux","state", "react", "functional","fp", "actions", "javascript"],
   "scripts": {
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",

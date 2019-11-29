@@ -1,6 +1,10 @@
 import { Action, Context } from "./createState";
 import { getMethodName } from "./utils";
-
+/**
+ * @param  {TState} state
+ * @param  {TAction} action
+ * @param  {Context<TState>} context
+ */
 export function createReducer<TState, TAction extends Action<any>>
     (state: TState, action: TAction, context: Context<TState>) {
 
