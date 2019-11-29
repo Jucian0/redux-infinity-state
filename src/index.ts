@@ -1,2 +1,2 @@
-export * from './lib/createState'
-export * from './lib/middlewareAsync'
+export * from './lib/createState';
+export * from './lib/middlewareAsync';

@@ -1,9 +1,13 @@
-import { AnyAction, Store, Dispatch, Middleware, Action } from "redux";
+import { AnyAction, Store, Dispatch, Middleware, Action } from 'redux';
 /**
  * @param  {} {actionQueue.forEach(a=>store.dispatch(a
  * @param  {AnyAction} ;actionQueue=[];}functiondispatch(action
  */
-export const middlewareAsync:Middleware<Store, Dispatch<Action>, any> = store => next => action => {
+export const middlewareAsync: Middleware<
+  Store,
+  Dispatch<Action>,
+  any
+> = store => next => action => {
   let syncActivityFinished = false;
   let actionQueue: any[] = [];
   /**
@@ -17,9 +21,8 @@ export const middlewareAsync:Middleware<Store, Dispatch<Action>, any> = store =>
    * @param  {AnyAction} action
    */
   function dispatch(action: AnyAction) {
-
-    if (!action || typeof action !== "object") {
-      throw new Error('Action must be a object')
+    if (!action || typeof action !== 'object') {
+      throw new Error('Action must be a object');
     }
 
     actionQueue = actionQueue.concat([action]);
@@ -29,12 +32,9 @@ export const middlewareAsync:Middleware<Store, Dispatch<Action>, any> = store =>
     }
   }
 
-
-  const actionWithAsyncDispatch =
-    Object.assign({}, action, { dispatch });
+  const actionWithAsyncDispatch = Object.assign({}, action, { dispatch });
 
   next(actionWithAsyncDispatch);
   syncActivityFinished = true;
   flushQueue();
 };
-
