@@ -8,17 +8,17 @@ import { getType } from "./utils"
 export type Method<TState, TPayload = undefined> =
     (state: TState, payload: TPayload) => TState
 
-export type Methods<TState, TPayload = undefined> =
+export type Methods<TState, TPayload = any> =
     { [x: string]: Method<TState, TPayload>; }
 /**
  * @param  {TState} state
  * @param  {TPayload} payload
  * @param  {Dispatch} dispatch
  */
-export type Service<TState, TPayload = undefined> =
+export type Service<TState, TPayload = any> =
     (state: TState, payload: TPayload, dispatch: Dispatch) => Promise<any>
 
-export type Services<TState, TPayload = undefined> =
+export type Services<TState, TPayload = any> =
     { [x: string]: Service<TState, TPayload>; }
 
 export interface Context<TState> {
