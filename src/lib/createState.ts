@@ -1,17 +1,24 @@
 import { Dispatch } from "redux"
 import { createReducer } from "./createReducer"
 import { getType } from "./utils"
-
-export type Method<TState, TPayload = any> =
+/**
+ * @param  {TState} state
+ * @param  {TPayload} payload
+ */
+export type Method<TState, TPayload = undefined> =
     (state: TState, payload: TPayload) => TState
 
-export type Methods<TState, TPayload = any> =
+export type Methods<TState, TPayload = undefined> =
     { [x: string]: Method<TState, TPayload>; }
-
-export type Service<TState, TPayload = any> =
+/**
+ * @param  {TState} state
+ * @param  {TPayload} payload
+ * @param  {Dispatch} dispatch
+ */
+export type Service<TState, TPayload = undefined> =
     (state: TState, payload: TPayload, dispatch: Dispatch) => Promise<any>
 
-export type Services<TState, TPayload = any> =
+export type Services<TState, TPayload = undefined> =
     { [x: string]: Service<TState, TPayload>; }
 
 export interface Context<TState> {
