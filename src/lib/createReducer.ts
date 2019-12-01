@@ -24,7 +24,11 @@ export function createReducer<TState, TAction extends Action<any>>(
 
   const newState = method(state, action.payload, action.dispatch);
 
-  if (newState && typeof newState.then !== 'function') {
+  if (
+    newState && 
+    typeof newState.then !== 'function' ||
+    typeof newState.catch !== 'function'
+    ) {
     return newState;
   }
 
