@@ -118,10 +118,10 @@ type EffectWithPayload<T> = (payload: GetServiceParams<T>) => { payload: GetServ
  * @param  {string}} =>{The type action defines what changes will be made to the state
  * @returns string
  */
-type EffectWithoutPayload<T> = () => { type: string };;
+type EffectWithoutPayload = () => { type: string };
 
 type TEffect<TA> = GetServiceParams<TA> extends undefined | null
-  ? EffectWithoutPayload<TA>
+  ? EffectWithoutPayload
   : EffectWithPayload<TA>;
 
 export type Effects<TContext> = {
