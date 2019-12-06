@@ -10,7 +10,7 @@ function middleware(payload?: any): Middleware<Store, Dispatch<Action>> {
     };
 }
 
-const asyncAction: any = middleware();
-asyncAction.withExtraArgument = middleware;
+const asyncActionMiddleware: any = middleware();
+asyncActionMiddleware.withExtraArgument = middleware;
 
-export default asyncAction;
+export {asyncActionMiddleware};
