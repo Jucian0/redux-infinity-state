@@ -29,7 +29,7 @@ type GetMethodParams<T> = T extends (params: MethodParams<any, infer P>) => any
  * @param  {any} ...args
  * @returns any
  */
-type GetReturnType<T> = T extends (...args: any) => infer R ? R : any;
+//type GetReturnType<T> = T extends (...args: any) => infer R ? R : any;
 
 /**
  * @param  {TState} state State is the only true source in the Redux ecosystem, represents the current state of your application.
@@ -113,12 +113,12 @@ export type Action<TP> = { type: string; payload?: TP; dispatch: Dispatch };
 /**
  * @param  {GetParams<T>[1]} payload
  */
-type EffectWithPayload<T> = (payload: GetServiceParams<T>) => GetReturnType<T>;
+type EffectWithPayload<T> = (payload: GetServiceParams<T>) => { payload: GetServiceParams<T>; type: string };;
 /**
  * @param  {string}} =>{The type action defines what changes will be made to the state
  * @returns string
  */
-type EffectWithoutPayload<T> = () => GetReturnType<T>;
+type EffectWithoutPayload<T> = () => { type: string };;
 
 type TEffect<TA> = GetServiceParams<TA> extends undefined | null
   ? EffectWithoutPayload<TA>
@@ -183,8 +183,8 @@ export function createState<TypeContext extends Context<TypeContext['state']>>(
          * @param  {TypeContext["state"]} state
          */
         (dispatch: Dispatch, state: TypeContext['state']) => {
-          dispatch({ payload, type: getType(context.name, service) });
-          return services[service]({ state, payload, dispatch });
+          services[service]({ state, payload, dispatch });
+          return dispatch({ payload, type: getType(context.name, service) });
         };
     }
 
