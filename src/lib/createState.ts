@@ -1,25 +1,39 @@
 import { Dispatch } from "redux"
 import { createReducer } from "./createReducer"
 import { getType } from "./utils"
+
+type MethodParams<TState, TPayload> = { state: TState, payload: TPayload }
+
 /**
- * @param  {TState} state
- * @param  {TPayload} payload
+ * @param  {inferP} ...args
+ * @returns never
+ */
+type GetParams<T> = T extends (params: MethodParams<any, infer P>  ) => any ? P : never;
+/**
+ * @param  {any} ...args
+ * @returns any
+ */
+type GetReturnType<T> = T extends (...args: any) => infer R ? R : any;
+
+/**
+ * @param  {TState} state State is the only true source in the Redux ecosystem, represents the current state of your application.
+ * @param  {TPayload} payload Payload of action is a data value for mutation your state context.
  */
 export type Method<TState, TPayload = undefined> =
-    (state: TState, payload: TPayload) => TState
+    (params: MethodParams<TState, TPayload>) => TState
 
 export type Methods<TState, TPayload = any> =
     { [x: string]: Method<TState, TPayload>; }
 /**
- * @param  {TState} state
- * @param  {TPayload} payload
- * @param  {Dispatch} dispatch
+ * @param  {TState} state State is the only true source in the Redux ecosystem, represents the current state of your application.
+ * @param  {TPayload} payload Payload of action is a data value for mutation your state context.
+ * @param  {Dispatch} dispatch Dispatches an action. This is the only way to trigger a state change.
  */
-export type Service<TState, TPayload = any> =
-    (state: TState, payload: TPayload, dispatch: Dispatch) => Promise<any>
+export type Service<TState, TPayload = any, TReturn = Promise<any>> =
+    (params: { state: TState, payload: TPayload, dispatch: Dispatch }) => TReturn
 
-export type Services<TState, TPayload = any> =
-    { [x: string]: Service<TState, TPayload>; }
+export type Services<TState, TPayload = any, TReturn = any> =
+    { [x: string]: Service<TState, TPayload, TReturn>; }
 
 export interface Context<TState> {
     /**
@@ -38,29 +52,52 @@ export interface Context<TState> {
     methods: Methods<TState>;
     services?: Services<TState>;
 }
+
 /**
- * @param  {inferP} ...args
- * @returns never
+ * types actions sync
  */
-type GetParams<T> = T extends (...args: infer P) => any ? P : never;
+
 /**
- * @param  {GetParams<T>[1]} payload
+ * @param  {GetParams<T>[1]} payload Payload of action is a data value for mutation your state context
  * @returns string
  */
-type WithPayload<T> = (payload: GetParams<T>[1]) => { payload: GetParams<T>[1], type: string }
+type WithPayload<T> = (payload: GetParams<T>) => { payload: GetParams<T>, type: string }
 /**
- * @param  {string}} =>{type
+ * @param  {string}} =>{The type action defines what changes will be made to the state.
  * @returns string
  */
 type WithoutPayload = () => { type: string }
 
-type TAction<TA> = GetParams<TA>[1] extends undefined ? WithoutPayload : WithPayload<TA>
+type TAction<TA> = GetParams<TA> extends undefined ? WithoutPayload : WithPayload<TA>
 
 export type Actions<TContext> = {
     [K in Extract<keyof TContext, string>]: TAction<TContext[K]>
 }
 
 export type Action<TP> = { type: string, payload?: TP, dispatch: Dispatch }
+
+/**
+ * 
+ * types async functions
+ */
+/**
+ * @param  {GetParams<T>[1]} payload
+ */
+type EffectWithPayload<T> = (payload: GetParams<T>) => GetReturnType<T>
+/**
+ * @param  {string}} =>{The type action defines what changes will be made to the state
+ * @returns string
+ */
+type EffectWithoutPayload<T> = () => GetReturnType<T>
+
+type TEffect<TA> = GetParams<TA> extends undefined ? EffectWithoutPayload<TA> : EffectWithPayload<TA>
+
+
+export type Effects<TContext> = {
+    [K in Extract<keyof TContext, string>]: TEffect<TContext[K]>
+}
+
+export type Effect<TP> = { type: string, payload?: TP, dispatch: Dispatch }
 
 /**
  * A function that accepts an initial state, an object of methods, and object of services.
@@ -72,7 +109,7 @@ export type Action<TP> = { type: string, payload?: TP, dispatch: Dispatch }
  * CreateState automatically generate actions for methods and services.
  * 
  *
- * @param  {TypeContext} context
+ * @param  {TypeContext} context Context is an object that contains all its methods, services and initial state. 
  */
 export function createState<TypeContext extends
     Context<TypeContext["state"]>>(context: TypeContext) {
@@ -82,7 +119,7 @@ export function createState<TypeContext extends
     }
 
     const actions: Actions<TypeContext["methods"]> = Object.assign({})
-    const effects: Actions<TypeContext["services"]> = Object.assign({})
+    const effects: Effects<TypeContext["services"]> = Object.assign({})
 
     /**
      * @param  {TypeContext["methods"]} methods
@@ -100,15 +137,26 @@ export function createState<TypeContext extends
     /**
      * @param  {TypeContext["services"]} methods
      */
-    const effectCreator = (methods: TypeContext["services"]) => {
+    const effectCreator = (services: TypeContext["services"]) => {
         const effectsL = Object.assign({}, effects) as any
-        for (let method in methods) {
-            effectsL[method] = (payload: any) => ({ payload, type: getType(context.name, method) })
+        for (let service in services) {
+            /**
+             * @param  {any} payload Async Actions are way to resolve async flux before. Async Action return a function instead of an action object. 
+             */
+            effectsL[service] = (payload: any) =>
+                /**
+                 * @param  {Dispatch} dispatch
+                 * @param  {TypeContext["state"]} state
+                 */
+                (dispatch: Dispatch, state: TypeContext["state"]) => {
+                    dispatch({ payload, type: getType(context.name, service) })
+                    return services[service]({ state, payload, dispatch })
+                }
         }
 
-        const ef: Actions<TypeContext["services"]> = Object.assign({})
+        const ef: Effects<TypeContext["services"]> = Object.assign({})
 
-        return Object.assign(ef, effectsL) as Actions<TypeContext["services"]>
+        return Object.assign(ef, effectsL) as Effects<TypeContext["services"]>
     }
     /**
      * @param  {TypeContext["state"]=context.state} state

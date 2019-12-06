@@ -29,15 +29,28 @@ Como mencionado anteriormente não é necessário uma biblioteca especifica para
 
 Isso é possível utilizando um middleware que injeta o Dispatch do redux dentro de uma função especifica para resolver fluxos assíncronos.
 
-###### Exemplo de uma função com fluxo assíncrono:
+###### Exemplo de uma função com fluxo assíncrono usando Promise:
 Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
 
 ```
-const fetch: Service<TodosState> = (state,_, dispatch) =>
+const fetch: Service<TodosState> = ({state, dispatch}) =>
   Axios.get('https://yourapi')
     .then(resp =>resp.data.map(item => item))
     .then(data => dispatch(actions.success(data)))
     .catch(err => dispatch(actions.failure(err.data)))
+
+```
+
+###### Exemplo de uma função com fluxo assíncrono usando Rxjs:
+Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
+
+```
+const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
+  from(Axios.get('https://yourapi'))
+    .subscribe(
+      resp => dispatch(actions.success(resp.data)),
+      err => dispatch(actions.failure(err.data))
+    )
 
 ```
 
@@ -78,28 +91,28 @@ export type TodosState = Array<Todo>
 
 const INITIAL_STATE: TodosState = []
 
-const add: Method<TodosState, string> = (state, payload) =>
+const add: Method<TodosState, string> = ({state, payload}) =>
   [
     ...state,
     { id: Math.random(), text: payload, complete: false }
   ]
 
-const toggle: Method<TodosState, number> = (state, payload) =>
+const toggle: Method<TodosState, number> = ({state, payload}) =>
   state.map(
     (todo: Todo) =>
       todo.id === payload ? { ...todo, complete: !todo.complete } : todo
   )
 
-const remove: Method<TodosState, number> = (state, payload) =>
+const remove: Method<TodosState, number> = ({state, payload}) =>
   state.filter((todo: Todo) => todo.id !== payload)
 
-const fetch: Service<TodosState> = (state,_, dispatch) =>
+const fetch: Service<TodosState> = ({dispatch}) =>
   Axios.get('https://yourapi')
     .then(resp =>resp.data.map(item => item))
     .then(data => dispatch(actions.success(data)))
     .catch(err => dispatch(actions.failure(err.data)))
 
-const success:Method<TodosState, Array<Todo>> = (state, payload) =>
+const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 
 export const { actions, reducer } = createState({
@@ -138,7 +151,7 @@ const dispatch = useDispatch();
 
 ### Adicionando o middleware
 
-É necessário adicionar o `middlewareAsync` para conseguir resolver os fluxos assíncronos.
+É necessário adicionar o `asyncActionMiddleware` para conseguir resolver os fluxos assíncronos.
 
 ```
 const store = createStore(
@@ -146,7 +159,7 @@ const store = createStore(
     appState,
     composeEnhancers(
         applyMiddleware(
-            middlewareAsync
+            asyncActionMiddleware
         )
 ));
 
