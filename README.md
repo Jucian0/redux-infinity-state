@@ -57,7 +57,7 @@ const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
 ###### Exemplo de uma função com fluxo síncrono:
 
 ```
-const success:Method<TodosState, Array<Todo>> = (state, payload) =>
+const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 ```
 
