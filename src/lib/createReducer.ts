@@ -1,11 +1,12 @@
-import { Action, Context } from './createState';
+import { Context } from './createState';
 import { getMethodName } from './utils';
+import { AnyAction } from 'redux';
 /**
  * @param  {TState} state Current State of yur context Application
  * @param  {TAction} action Actions are payloads of information that send data from your application to your store. They are the only source of information for the store. You send them to the store using store.dispatch().
  * @param  {Context<TState>} context Context is an object that contains all its methods, services and initial state.
  */
-export function createReducer<TState, TAction extends Action<any>>(
+export function createReducer<TState, TAction extends AnyAction>(
   state: TState,
   action: TAction,
   context: Context<TState>

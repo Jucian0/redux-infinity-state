@@ -1,14 +1,12 @@
-import { Service, Method, createState } from '..';
+import { Service, Method, createState, ServiceParams } from '..';
 
-const add: Service<Array<any>, string, Promise<any>> = ({
-  state
-}) =>
+const add: Service<Array<any>, string, Promise<any>> = ({ state }) =>
   new Promise((exec, reject) => {
     exec(state);
     reject();
   });
 
-const adeus: Service<Array<any>> = ({ state }) =>
+const godBye: Service<Array<any>> = ({ state }) =>
   new Promise((exec, reject) => {
     exec(state);
     reject();
@@ -29,11 +27,15 @@ const { actions } = createState({
   },
   services: {
     add,
-    adeus
+    godBye,
+    soma: ({ state, dispatch }: ServiceParams<Array<any>>) => {
+      return [...state, dispatch]
+    }
   }
 });
 
 actions.add('ABC');
 actions.remove('ABC');
 actions.set();
-actions.adeus();
+actions.godBye();
+actions.soma()

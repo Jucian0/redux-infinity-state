@@ -16,7 +16,6 @@
     "readonly-keyword": true,
     "readonly-array": true,
     "no-let": true,
-    "no-object-mutation": true,
     "no-delete": true,
     "no-method-signature": true,
 
@@ -28,7 +27,6 @@
       true,
       { "ignore-prefix": ["console.", "process.exit"] }
     ],
-    "no-if-statement": true
     /* end tslint-immutable rules */
   }
 }
