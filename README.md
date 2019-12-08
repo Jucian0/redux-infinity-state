@@ -24,6 +24,7 @@ As ações são funções que basicamente devolvem um payload e um tipo que é r
 No modo convencional de uso do redux seria necessário criar uma função de ação para cada tipo de mudança que se deseja realizar no state.
 
 Com o  redux-infinity-state isso é feito automaticamente com as tipagens correta para ações com payload.
+
 ##### Trazer os fluxos assíncronos junto ao fluxo síncrono
 Como mencionado anteriormente não é necessário uma biblioteca especifica para lidar com fluxos assíncronos, pois isso é resolvido de forma parecida como se resolve um fluxo síncrono.
 
