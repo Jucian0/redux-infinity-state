@@ -2,6 +2,9 @@
 
 ## A package for state management of react redux applications
 
+## Portuguese
+https://github.com/Jucian0/redux-infinity-state/blob/master/README.pt.md
+
 ### Motivation
 
 We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
