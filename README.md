@@ -5,7 +5,14 @@
 ## Portuguese
 https://github.com/Jucian0/redux-infinity-state/blob/master/README.pt.md
 
+## Install
+
+`yarn add redux-infinity-state`
+
+`npm install --save redux-infinity-state`
+
 ### Motivation
+
 
 We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
 With Redux, the management state and data synchronization between components is eased.
