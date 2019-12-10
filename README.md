@@ -1,37 +1,40 @@
 # redux-infinity-state
 
-## Um pacote de gerenciamento de estado para aplicações react redux
+## A package for state management of react redux applications
 
-### Motivação
-Todos nos sabemos que redux é um ótimo aliado na construção de aplicações react com fluxo de dados mais complexos, com ele a tarefa de gerenciar o estado da aplicação e o sincronismo de dados entre os componentes torna-se muito fácil.
+### Motivation
 
-Porem em muitos casos o excesso de código em torno do redux torna o uso dele desestimulante, essa sensação aumenta ao perceber que a maioria desse código é repetitivo.
+We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
+With Redux, the management state and data synchronization between components is eased.
 
-Outro fator que desestimula o uso do redux é quando é necessário usar fluxos assíncronos, nesses casos é necessário fazer uso de um pacote extra para lidar com os fluxos assíncronos, exemplo Redux-Saga, Redux-Thunk, Redux-Observable. Todos esses pacotes executam essa tarefa muito bem. Porem ao usar essas soluções a parte síncrona fica separada da assíncrona, e por mais que isso faça sentido, não aparenta ser um fluxo natural.
+But in many cases the exceeding code around redux ecosystem makes the code hard to understand and maintain. This sensation increases when we realize that the code is repetitive, especially when many actions are written.
 
-
-### A solução proposta
-
-O redux-infinity-state vem para tentar resolver esses dois pontos e tornar o uso do redux mais simples e deixar o código organizado de forma mais logica.
-
-#### Isso é feito basicamente em três etapas
+Another factor that discourages the use of Redux is when we need to deal with asynchronous flows. In these cases is necessary at least one of the following libraries to solve the problem: Redux-Saga, Redux-Thunk or Redux-Observable. They are good solutions and do this job very well, but the synchronous code is splitted from the asynchronous, which is a nice approach, but the code become confuse and not natural.
 
 
-##### Criar ações automaticamente
+### The proposed solution
 
-As ações são funções que basicamente devolvem um payload e um tipo que é responsável por dizer ao redux qual mudança deve ser feita no estado da aplicação.
+The redux-infinity-state come to solve some of the problems mentioned and makes Redux use easier, making your code more organized and simple.
 
-No modo convencional de uso do redux seria necessário criar uma função de ação para cada tipo de mudança que se deseja realizar no state.
+#### Its use have basically three stages
 
-Com o  redux-infinity-state isso é feito automaticamente com as tipagens correta para ações com payload.
+##### Create actions automatically
 
-##### Trazer os fluxos assíncronos junto ao fluxo síncrono
-Como mencionado anteriormente não é necessário uma biblioteca especifica para lidar com fluxos assíncronos, pois isso é resolvido de forma parecida como se resolve um fluxo síncrono.
+Actions are functions that basically return a payload and an action type, being that the action type is the element who is in charge to define what change will happen in application state.
 
-Isso é possível utilizando um middleware que injeta o Dispatch do redux dentro de uma função especifica para resolver fluxos assíncronos.
+In the conventional use of Redux, it will be necessary an action function for every kind of change you want to make in the state.
 
-###### Exemplo de uma função com fluxo assíncrono usando Promise:
-Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
+With the redux-infinity-state this is automatically realized with correct types for every actions, including payload type.
+
+
+##### Make asynchronous actions as simple as synchronous actions
+
+As mentioned above, isn't necessary another library for async actions, redux-infinity-state makes it so simple as sync actions.
+
+This is possible with a middleware that injects the Dispatch from Redux into an async action function.
+
+###### Example of an async flux function with promise:
+Ps*: `dispatch` are available only for async functions.
 
 ```
 const fetch: Service<TodosState> = ({state, dispatch}) =>
@@ -42,8 +45,8 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
 
 ```
 
-###### Exemplo de uma função com fluxo assíncrono usando Rxjs:
-Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
+###### Example of an async flux function with Rxjs:
+Ps* `dispatch` are available only async functions.
 
 ```
 const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
@@ -55,20 +58,20 @@ const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
 
 ```
 
-###### Exemplo de uma função com fluxo síncrono:
+###### Example of a sync flux function:
 
 ```
 const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 ```
 
-##### Não é necessário declarar uma lista de tipo
+##### No need to declare action type list
 
-Como mencionado anteriormente as ações são geradas automaticamente e com elas os tipos específicos de cada uma.
+As mentioned above the actions are generated automatically with your types.
 
-Necessitando apenas declarar um nome para o contexto do estado que esta sendo gerenciado.
+Its only needed to declare a name for the state context being managed.
 
-###### Exemplo
+###### Example
 
 ```
 const context = createState({
@@ -76,9 +79,9 @@ const context = createState({
 })
 ```
 
-### Criando um state
+### Creating a state
 
-No exemplo esta sendo utilizado o `typescript`, sinta-se a vontade para utilizar `javascript`
+This example uses `typescript`, feel free to use `javascript`
 
 
 ```
@@ -133,9 +136,9 @@ export const { actions, reducer } = createState({
 })
 ```
 
-### Disparando uma ação
+### Dispatching an action
 
-Com os hooks disponíveis na nova versão do redux fica muito fácil.
+With hooks available in the new version of Redux(`useDispatch`), its use is simplified.
 
 ```
 const dispatch = useDispatch();
@@ -150,9 +153,9 @@ const dispatch = useDispatch();
 </form>
 ```
 
-### Adicionando o middleware
+### Add the middleware
 
-É necessário adicionar o `asyncActionMiddleware` para conseguir resolver os fluxos assíncronos.
+It's necessary to use the middleware `asyncActionMiddleware` to be able to resolve asynchronous flows.
 
 ```
 const store = createStore(
@@ -167,11 +170,15 @@ const store = createStore(
 export default store;
 ```
 
-### Exemplo de implementação 
+### Writing Tests
 
-VOcê pode ver o código fonte de um exemplo de implementação com fluxos assíncronos aqui:
+https://redux.js.org/recipes/writing-tests
+
+### Example of implementation
+
+You can see the implementation code here:
  * https://github.com/Jucian0/redux-infinity-state-exemple
 
-Ou pode brincar com a aplicação no `CodeSandbox`
+Or play with the code using `CodeSandbox`
 * https://codesandbox.io/s/github/Jucian0/redux-infinity-state-exemple
 
