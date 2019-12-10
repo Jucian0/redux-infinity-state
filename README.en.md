@@ -140,7 +140,7 @@ export const { actions, reducer } = createState({
 })
 ```
 
-### Dispatching a action
+### Dispatching an action
 
 Redux hook `useDispatch` make this so easy.
 
