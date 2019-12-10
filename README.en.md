@@ -4,41 +4,37 @@
 
 ### Motivation
 
-### Motivação
+We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
+With Redux, the management state and data synchronization between components is eased.
 
-We know that redux is important part of react ecosystem further if application have a complex flux and asynchronous actions.
-With redux the management state and data synchronization between components is easy peasy.
+But in many cases the exceeding code around redux ecosystem makes the code hard to understand and maintain. This sensation increases when we realize that the code is repetitive, especially when many actions are written.
 
-But in many cases the exceeding code around redux ecosystem
-is boring and tiring. The sensation increases when we discovery that codes is repetitive especially when create many actions and actions type.
-
-Another factor that discourages the use redux is when you need deal with asynchronous flux, in these cases is necessary at least one library for this job. Redux-Saga, Redux-Thunk or Redux-Observable are good solutions and do this job very well, but the synchronous part keep parted of asynchronous and it make sense, but the code keep confuse and not natural.
+Another factor that discourages the use of Redux is when we need to deal with asynchronous flows. In these cases is necessary at least one of the following libraries to solve the problem: Redux-Saga, Redux-Thunk or Redux-Observable. They are good solutions and do this job very well, but the synchronous code is splitted from the asynchronous, which is a nice approach, but the code become confuse and not natural.
 
 
-### The approach propose
+### The proposed solution
 
-The redux-infinity-state come try to solve these two problems and make redux use more easy and make the code more organized and simple.
+The redux-infinity-state come to solve some of the problems mentioned and makes Redux use easier, making your code more organized and simple.
 
+#### Its use have basically three stages
 
-#### This is make basically in three stages
+##### Create actions automatically
 
-##### Create automatically actions
+Actions are functions that basically return a payload and an action type, being that the action type is the element who is in charge to define what change will happen in application state.
 
-The Actions are functions that basically return a payload and a action type, this type is who define what change will happen in application state.
+In the conventional use of Redux, it will be necessary an action function for every kind of change you want to make in the state.
 
-In conventional mode of redux, it will be necessary a action function for every kind of change you want to make in the state.
-
-With the redux-infinity-state this is automatically realized with corrects types for every actions, includes payload type.
+With the redux-infinity-state this is automatically realized with correct types for every actions, including payload type.
 
 
 ##### Make asynchronous actions as simple as synchronous actions
 
-As mentioned above isn't necessary another library for async actions, redux-infinity-state make it so simple as sync actions.
+As mentioned above, isn't necessary another library for async actions, redux-infinity-state makes it so simple as sync actions.
 
-This is possible with middleware that inject the Dispatch from redux into a async action function.
+This is possible with a middleware that injects the Dispatch from Redux into an async action function.
 
-###### Example of a async flux function with promise:
-Ps* `dispatch` are available only async functions.
+###### Example of an async flux function with promise:
+Ps*: `dispatch` are available only for async functions.
 
 ```
 const fetch: Service<TodosState> = ({state, dispatch}) =>
@@ -49,7 +45,7 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
 
 ```
 
-###### Example of a async flux function with Rxjs:
+###### Example of an async flux function with Rxjs:
 Ps* `dispatch` are available only async functions.
 
 ```
@@ -71,9 +67,9 @@ const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
 
 ##### No need to declare action type list
 
-As mentioned above the actions are generated automatically with yours types.
+As mentioned above the actions are generated automatically with your types.
 
-Just needing to declare a name for the state context being managed.
+Its only needed to declare a name for the state context being managed.
 
 ###### Example
 
@@ -85,7 +81,7 @@ const context = createState({
 
 ### Creating a state
 
-This example are using `typescript`, feel free to use `javascript`
+This example uses `typescript`, feel free to use `javascript`
 
 
 ```
@@ -142,7 +138,7 @@ export const { actions, reducer } = createState({
 
 ### Dispatching an action
 
-Redux hook `useDispatch` make this so easy.
+With hooks available in the new version of Redux(`useDispatch`), its use is simplified.
 
 ```
 const dispatch = useDispatch();
@@ -159,7 +155,7 @@ const dispatch = useDispatch();
 
 ### Add the middleware
 
-Is necessary to use middleware `asyncActionMiddleware` to be able to resolve asynchronous flows.
+It's necessary to use the middleware `asyncActionMiddleware` to be able to resolve asynchronous flows.
 
 ```
 const store = createStore(
@@ -183,6 +179,6 @@ https://redux.js.org/recipes/writing-tests
 You can see the implementation code here:
  * https://github.com/Jucian0/redux-infinity-state-exemple
 
-Or playground `CodeSandbox`
+Or play with the code using `CodeSandbox`
 * https://codesandbox.io/s/github/Jucian0/redux-infinity-state-exemple
 
