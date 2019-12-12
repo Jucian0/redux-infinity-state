@@ -81,7 +81,7 @@ export interface Context<TState> {
   * functions. These services should have existing action types used
   * as the keys, and action creators will _not_ be generated.
   */
-  readonly services?: Services<TState>;
+  readonly services?: Services<any>;
 }
 
 /**
