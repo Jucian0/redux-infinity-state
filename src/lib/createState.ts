@@ -10,7 +10,7 @@ export interface ServiceParams<TState, TPayload = undefined> {
   readonly state: TState;
   readonly payload: TPayload;
   readonly dispatch: Dispatch;
-};
+}
 /**
  * @param  {inferP} ...args
  * @returns never
@@ -21,7 +21,10 @@ type GetServiceParams<T> = T extends (
   ? ServiceParams<any, P>['payload']
   : never;
 
-type MethodParams<TState, TPayload> = { state: TState; payload: TPayload };
+export type MethodParams<TState, TPayload> = {
+  state: TState;
+  payload: TPayload;
+};
 /**
  * @param  {inferP} ...args
  * @returns never
@@ -51,11 +54,9 @@ export type Methods<TState, TPayload = any> = {
  * @param  {TPayload} payload Payload of action is a data value for mutation your state context. Refer then type of payload action, payload type is option if your action not have payload.
  * @param  {Dispatch} dispatch Dispatches an action. This is the only way to trigger a state change.
  */
-export type Service<
-  TState,
-  TPayload = undefined,
-  TReturn = Promise<any>
-  > = (params: ServiceParams<TState, TPayload>) => TReturn;
+export type Service<TState, TPayload = undefined, TReturn = Promise<any>> = (
+  params: ServiceParams<TState, TPayload>
+) => TReturn;
 
 export type Services<TState, TPayload = any, TReturn = any> = {
   [x: string]: Service<TState, TPayload, TReturn>;
@@ -77,10 +78,10 @@ export interface Context<TState> {
    */
   readonly methods: Methods<TState>;
   /**
-  * @param services A mapping from action types to action-type-specific
-  * functions. These services should have existing action types used
-  * as the keys, and action creators will _not_ be generated.
-  */
+   * @param services A mapping from action types to action-type-specific
+   * functions. These services should have existing action types used
+   * as the keys, and action creators will _not_ be generated.
+   */
   readonly services?: Services<any>;
 }
 
@@ -108,7 +109,6 @@ type TAction<TA> = GetMethodParams<TA> extends undefined
 export type Actions<TContext> = {
   [K in Extract<keyof TContext, string>]: TAction<TContext[K]>;
 };
-
 
 /**
  *
@@ -195,7 +195,7 @@ export function createState<TypeContext extends Context<TypeContext['state']>>(
     // tslint:disable-next-line: forin
     for (let service in services) {
       /**
-       * @param  {any} payload Async Actions are way to resolve async flux before. 
+       * @param  {any} payload Async Actions are way to resolve async flux before.
        * Async Action return a function instead of an action object.
        */
       effectsL[service] = (payload: any) => {
