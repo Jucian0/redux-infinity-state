@@ -21,7 +21,10 @@ type GetServiceParams<T> = T extends (
   ? ServiceParams<any, P>['payload']
   : never;
 
-type MethodParams<TState, TPayload> = { state: TState; payload: TPayload };
+export type MethodParams<TState, TPayload> = {
+  state: TState;
+  payload: TPayload;
+};
 /**
  * @param  {inferP} ...args
  * @returns never
