@@ -1,29 +1,83 @@
-import { Middleware, Store, Dispatch, Action } from 'redux';
-/**
- * @param  {any} payload? Payload of action is a data value for mutation your state context.
- */
-function middleware(payload?: any): Middleware<Store, Dispatch<Action>> {
-  /**
-   * @param  {} {dispatch Dispatches an action. This is the only way to trigger a state change.
-   * @param  {} getState} These function return the current state of your application
-   * @param  {} =>next=>action=>{if(typeofaction==='function'
-   * @param  {} {returnaction(dispatch
-   * @param  {} getState(
-   * @param  {} payload Payload of action is a data value for mutation your state context.
-   * @param  {} ;}returnnext(action
-   */
-  return ({ dispatch, getState }) => next => action => {
-    if (typeof action === 'function') {
-      return action(dispatch, getState(), payload);
-    }
+import test from 'ava';
+import asyncActionMiddleware from './asyncActionMiddleware';
+import { isFunction } from 'util';
 
-    return next(action);
-  };
-}
-/**
- * A middleware to solve async actions
- */
-const asyncActionMiddleware: any = middleware();
-asyncActionMiddleware.withExtraArgument = middleware;
+const doDispatch = () => {};
+const doGetState = () => {};
+const nextHandler = asyncActionMiddleware({
+  dispatch: doDispatch,
+  getState: doGetState
+});
 
-export default asyncActionMiddleware;
+test('must return a function to handle next', t => {
+  const result = isFunction(nextHandler);
+
+  t.is(result, true);
+  t.is(nextHandler.length, 1);
+});
+
+test('must return a function to handle action', t => {
+  const actionHandler = isFunction(nextHandler());
+
+  t.is(actionHandler, true);
+  t.is(nextHandler().length, 1);
+});
+
+test('must run the given action function with dispatch and getState', t => {
+  const actionHandler = nextHandler();
+
+  actionHandler((dispatch, getState) => {
+    t.deepEqual(dispatch, doDispatch);
+    console.log(getState);
+    //t.deepEqual(getState, doGetState)
+  });
+});
+
+test('must pass action to next if not a function', t => {
+  const actionObj = {};
+
+  const actionHandler = nextHandler(action => {
+    t.deepEqual(action, actionObj);
+  });
+
+  actionHandler(actionObj);
+});
+
+test('must return the return value of next if not a function', t => {
+  const expected = 'redux';
+  const actionHandler = nextHandler(() => expected);
+
+  const outcome = actionHandler();
+
+  t.is(outcome, expected);
+});
+
+test('must return value as expected if a function', t => {
+  const expected = 'rocks';
+  const actionHandler = nextHandler();
+
+  const outcome = actionHandler(() => expected);
+
+  t.is(outcome, expected);
+});
+
+test('must be invoked synchronously if a function', t => {
+  const actionHandler = nextHandler();
+  let mutated = 0;
+
+  actionHandler(() => mutated++);
+  t.is(mutated, 1);
+});
+
+test('must pass the third argument', t => {
+  const extraArg = { lol: true };
+  asyncActionMiddleware.withExtraArgument(extraArg)({
+    dispatch: doDispatch,
+    getState: doGetState
+  })()((dispatch, getState, arg) => {
+    t.deepEqual(dispatch, doDispatch);
+    // t.deepEqual(getState, doGetState);
+    console.log(getState);
+    t.deepEqual(arg, extraArg);
+  });
+});
