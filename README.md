@@ -190,5 +190,5 @@ You can see the implementation code here:
  * https://github.com/Jucian0/redux-infinity-state-exemple
 
 Or play with the code using `CodeSandbox`
-* https://codesandbox.io/s/adoring-agnesi-50btt
+* https://codesandbox.io/s/redux-infinity-state-50btt
 
