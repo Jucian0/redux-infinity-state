@@ -1,4 +1,5 @@
-# redux-infinity-state
+# [redux-infinity-state](https://www.npmjs.com/package/redux-infinity-state)
+
 
  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jucian0/redux-infinity-state/blob/master/LICENSE) 
  [![npm version](https://img.shields.io/badge/npm-v1.0-ff69b4)](https://www.npmjs.com/package/redux-infinity-state) 
