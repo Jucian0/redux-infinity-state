@@ -1,5 +1,8 @@
 # redux-infinity-state
 
+ [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jucian0/redux-infinity-state/blob/master/LICENSE) 
+ [![npm version](https://img.shields.io/badge/npm-v1.0-ff69b4)](https://www.npmjs.com/package/redux-infinity-state) 
+
 ## Um pacote de gerenciamento de estado para aplicações react redux
 
 ### Motivação
@@ -33,7 +36,7 @@ Isso é possível utilizando um middleware que injeta o Dispatch do redux dentro
 ###### Exemplo de uma função com fluxo assíncrono usando Promise:
 Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
 
-```
+```typescript
 const fetch: Service<TodosState> = ({state, dispatch}) =>
   Axios.get('https://yourapi')
     .then(resp =>resp.data.map(item => item))
@@ -45,7 +48,7 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
 ###### Exemplo de uma função com fluxo assíncrono usando Rxjs:
 Ps* `dispatch` esta disponível apenas em funções que resolvem fluxos assíncronos.
 
-```
+```typescript
 const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
   from(Axios.get('https://yourapi'))
     .subscribe(
@@ -57,7 +60,7 @@ const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
 
 ###### Exemplo de uma função com fluxo síncrono:
 
-```
+```typescript
 const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 ```
@@ -70,7 +73,7 @@ Necessitando apenas declarar um nome para o contexto do estado que esta sendo ge
 
 ###### Exemplo
 
-```
+```typescript
 const context = createState({
   name: "todo"
 })
@@ -81,7 +84,7 @@ const context = createState({
 No exemplo esta sendo utilizado o `typescript`, sinta-se a vontade para utilizar `javascript`
 
 
-```
+```typescript
 export interface Todo {
   id: number
   text: string
@@ -137,11 +140,11 @@ export const { actions, reducer } = createState({
 
 Com os hooks disponíveis na nova versão do redux fica muito fácil.
 
-```
+```typescript
 const dispatch = useDispatch();
 ```
 
-```
+```html
 <form onSubmit={handleSubmit}>
     <input value={inputText} onChange={(e) => setInputText(e.target.value} />
     <button type="submit">Novo</button>
@@ -154,7 +157,7 @@ const dispatch = useDispatch();
 
 É necessário adicionar o `asyncActionMiddleware` para conseguir resolver os fluxos assíncronos.
 
-```
+```typescript
 const store = createStore(
     reducers, 
     appState,

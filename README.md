@@ -1,5 +1,9 @@
 # redux-infinity-state
 
+ [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jucian0/redux-infinity-state/blob/master/LICENSE) 
+ [![npm version](https://img.shields.io/badge/npm-v1.0-ff69b4)](https://www.npmjs.com/package/redux-infinity-state) 
+
+
 ## A package for state management of react redux applications
 
 ## Portuguese
@@ -46,7 +50,7 @@ This is possible with a middleware that injects the Dispatch from Redux into an 
 ###### Example of an async flux function with promise:
 Ps*: `dispatch` are available only for async functions.
 
-```
+```typescript
 const fetch: Service<TodosState> = ({state, dispatch}) =>
   Axios.get('https://yourapi')
     .then(resp =>resp.data.map(item => item))
@@ -58,7 +62,7 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
 ###### Example of an async flux function with Rxjs:
 Ps* `dispatch` are available only async functions.
 
-```
+```typescript
 const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
   from(Axios.get('https://yourapi'))
     .subscribe(
@@ -70,7 +74,7 @@ const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
 
 ###### Example of a sync flux function:
 
-```
+```typescript
 const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 ```
@@ -83,7 +87,7 @@ Its only needed to declare a name for the state context being managed.
 
 ###### Example
 
-```
+```typescript
 const context = createState({
   name: "todo"
 })
@@ -94,7 +98,7 @@ const context = createState({
 This example uses `typescript`, feel free to use `javascript`
 
 
-```
+```typescript
 export interface Todo {
   id: number
   text: string
@@ -150,11 +154,11 @@ export const { actions, reducer } = createState({
 
 With hooks available in the new version of Redux(`useDispatch`), its use is simplified.
 
-```
+```typescript
 const dispatch = useDispatch();
 ```
 
-```
+```html
 <form onSubmit={handleSubmit}>
     <input value={inputText} onChange={(e) => setInputText(e.target.value} />
     <button type="submit">Novo</button>
@@ -167,7 +171,7 @@ const dispatch = useDispatch();
 
 It's necessary to use the middleware `asyncActionMiddleware` to be able to resolve asynchronous flows.
 
-```
+```typescript
 const store = createStore(
     reducers, 
     appState,
