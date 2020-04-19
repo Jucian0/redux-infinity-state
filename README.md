@@ -1,4 +1,6 @@
-# [redux-infinity-state](https://www.npmjs.com/package/redux-infinity-state)
+# [redux-infinity-state](https://www.npmjs.com/package/redux-infinity-state)  [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A+package+for+state+management+of+react+redux+applications&url=https://github.com/Jucian0/redux-infinity-state&hashtags=reactjs,redux,javascript,developers)
+
+
 
 
  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jucian0/redux-infinity-state/blob/master/LICENSE) 
@@ -7,8 +9,6 @@
 
 ## A package for state management of react redux applications
 
-## Portuguese
-https://github.com/Jucian0/redux-infinity-state/blob/master/README.pt.md
 
 ## Install
 
