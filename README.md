@@ -16,7 +16,7 @@
 
 `npm install --save redux-infinity-state`
 
-### Motivation
+## Motivation
 
 
 We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
@@ -27,13 +27,13 @@ But in many cases the exceeding code around redux ecosystem makes the code hard 
 Another factor that discourages the use of Redux is when we need to deal with asynchronous flows. In these cases is necessary at least one of the following libraries to solve the problem: Redux-Saga, Redux-Thunk or Redux-Observable. They are good solutions and do this job very well, but the synchronous code is splitted from the asynchronous, which is a nice approach, but the code become confuse and not natural.
 
 
-### The proposed solution
+## The proposed solution
 
 The redux-infinity-state come to solve some of the problems mentioned and makes Redux use easier, making your code more organized and simple.
 
-#### Its use have basically three stages
+## Its use have basically three stages
 
-##### Create actions automatically
+### Create actions automatically
 
 Actions are functions that basically return a payload and an action type, being that the action type is the element who is in charge to define what change will happen in application state.
 
@@ -42,13 +42,13 @@ In the conventional use of Redux, it will be necessary an action function for ev
 With the redux-infinity-state this is automatically realized with correct types for every actions, including payload type.
 
 
-##### Make asynchronous actions as simple as synchronous actions
+### Make asynchronous actions as simple as synchronous actions
 
 As mentioned above, isn't necessary another library for async actions, redux-infinity-state makes it so simple as sync actions.
 
 This is possible with a middleware that injects the Dispatch from Redux into an async action function.
 
-###### Example of an async flux function with promise:
+### Example of an async flux function with promise:
 Ps*: `dispatch` are available only for async functions.
 
 ```typescript
@@ -60,7 +60,7 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
 
 ```
 
-###### Example of an async flux function with Rxjs:
+### Example of an async flux function with Rxjs:
 Ps* `dispatch` are available only async functions.
 
 ```typescript
@@ -73,20 +73,20 @@ const fetchRxjs: Service<TodosState, undefined, Subscription> = ({dispatch}) =>
 
 ```
 
-###### Example of a sync flux function:
+### Example of a sync flux function:
 
 ```typescript
 const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
   [...state, ...payload]
 ```
 
-##### No need to declare action type list
+#### No need to declare action type list
 
 As mentioned above the actions are generated automatically with your types.
 
 Its only needed to declare a name for the state context being managed.
 
-###### Example
+## Example
 
 ```typescript
 const context = createState({
@@ -163,7 +163,7 @@ const dispatch = useDispatch();
 <form onSubmit={handleSubmit}>
     <input value={inputText} onChange={(e) => setInputText(e.target.value} />
     <button type="submit">Novo</button>
-    <button type="button" onClick={() =>dispatch(actions.fetchPromise())} >Async Promise</button>
+    <button type="button" onClick={() => dispatch(actions.fetchPromise())} >Async Promise</button>
     <button type="button" onClick={() => dispatch(actions.reset())}>RESET</button>
 </form>
 ```
