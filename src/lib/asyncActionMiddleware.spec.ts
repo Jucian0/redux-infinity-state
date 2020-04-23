@@ -1,9 +1,9 @@
 import test from 'ava';
-import asyncActionMiddleware from './asyncActionMiddleware';
+import { asyncActionMiddleware } from './asyncActionMiddleware';
 import { isFunction } from 'util';
 
-const doDispatch = () => {};
-const doGetState = () => {};
+const doDispatch = () => { };
+const doGetState = () => { };
 const nextHandler = asyncActionMiddleware({
   dispatch: doDispatch,
   getState: doGetState
@@ -28,8 +28,7 @@ test('must run the given action function with dispatch and getState', t => {
 
   actionHandler((dispatch, getState) => {
     t.deepEqual(dispatch, doDispatch);
-    console.log(getState);
-    //t.deepEqual(getState, doGetState)
+    t.deepEqual(getState, doGetState)
   });
 });
 
