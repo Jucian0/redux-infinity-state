@@ -26,4 +26,4 @@ function middleware(payload?: any): Middleware<Store, Dispatch<Action>> {
 const asyncActionMiddleware: any = middleware();
 asyncActionMiddleware.withExtraArgument = middleware;
 
-export default asyncActionMiddleware;
+export { asyncActionMiddleware };
