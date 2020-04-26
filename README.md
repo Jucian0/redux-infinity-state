@@ -54,11 +54,22 @@ Ps*: `dispatch` are available only for async functions.
 
 ```typescript
 const fetch: Service<TodosState> = ({state, dispatch}) =>
-  Axios.get('https://yourapi')
+  Axios.get('https://your-api')
     .then(resp =>resp.data.map(item => item))
     .then(data => dispatch(actions.success(data)))
     .catch(err => dispatch(actions.failure(err.data)))
 
+```
+or
+```typescript
+const fetch: Service<TodosState, undefined> = async ({ dispatch }) => {
+  try {
+    const { data } = await Axios.get('https://your-api');
+    dispatch(actions.success(data))
+  } catch (e) {
+    dispatch(actions.failure(e.data))
+  }
+}
 ```
 
 ### Example of an async flux function with Rxjs:
