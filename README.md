@@ -20,32 +20,32 @@
 ## Motivation
 
 
-We all know that redux is an important part of React ecosystem, even if the application have complex flux and asynchronous actions.
-With Redux, the management state and data synchronization between components is eased.
+We all know that redux is an important part of the React ecosystem, even if the application has complex flux and asynchronous actions.
+With Redux, the management state and data synchronization between components are eased.
 
-But in many cases the exceeding code around redux ecosystem makes the code hard to understand and maintain. This sensation increases when we realize that the code is repetitive, especially when many actions are written.
+But in many cases, the exceeding code around the redux ecosystem makes the code hard to understand and maintain. This sensation increases when we realize that the code is repetitive, especially when many actions are written.
 
-Another factor that discourages the use of Redux is when we need to deal with asynchronous flows. In these cases is necessary at least one of the following libraries to solve the problem: Redux-Saga, Redux-Thunk or Redux-Observable. They are good solutions and do this job very well, but the synchronous code is splitted from the asynchronous, which is a nice approach, but the code become confuse and not natural.
+Another factor that discourages the use of Redux is when we need to deal with asynchronous flows. In these cases is necessary at least one of the following libraries to solve the problem: Redux-Saga, Redux-Thunk, or Redux-Observable. They are good solutions and do this job very well, but the synchronous code is splitted from the asynchronous, which is a nice approach, but the code becomes confused and not natural.
 
 
 ## The proposed solution
 
-The redux-infinity-state come to solve some of the problems mentioned and makes Redux use easier, making your code more organized and simple.
+The redux-infinity-state comes to solve some of the problems mentioned and makes Redux use easier, making your code more organized and simple.
 
-## Its use have basically three stages
+## Its use has three stages
 
 ### Create actions automatically
 
-Actions are functions that basically return a payload and an action type, being that the action type is the element who is in charge to define what change will happen in application state.
+Actions are functions that return a payload and an action type, being that the action type is the element who is in charge to define what change will happen in the application state.
 
-In the conventional use of Redux, it will be necessary an action function for every kind of change you want to make in the state.
+In the conventional use of Redux, it will be necessary for an action function for every kind of change you want to make in the state.
 
-With the redux-infinity-state this is automatically realized with correct types for every actions, including payload type.
+With the redux-infinity-state, this is automatically realized with correct types for every action, including payload type.
 
 
 ### Make asynchronous actions as simple as synchronous actions
 
-As mentioned above, isn't necessary another library for async actions, redux-infinity-state makes it so simple as sync actions.
+As mentioned above, it isn't necessary another library for async actions, redux-infinity-state makes it so simple as sync actions.
 
 This is possible with a middleware that injects the Dispatch from Redux into an async action function.
 
@@ -60,7 +60,8 @@ const fetch: Service<TodosState> = ({state, dispatch}) =>
     .catch(err => dispatch(actions.failure(err.data)))
 
 ```
-or
+You probably want to process or transform data before saving on the state. This is the place and you can use the Async Await approach.
+
 ```typescript
 const fetch: Service<TodosState, undefined> = async ({ dispatch }) => {
   try {
@@ -96,7 +97,7 @@ const success:Method<TodosState, Array<Todo>> = ({state, payload}) =>
 
 As mentioned above the actions are generated automatically with your types.
 
-Its only needed to declare a name for the state context being managed.
+It's only needed to declare a name for the state context being managed.
 
 ## Example
 
