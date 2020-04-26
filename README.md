@@ -5,6 +5,7 @@
 
  [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Jucian0/redux-infinity-state/blob/master/LICENSE) 
  [![npm version](https://img.shields.io/badge/npm-v1.0-ff69b4)](https://www.npmjs.com/package/redux-infinity-state) 
+ [![coverage](https://img.shields.io/badge/coverage-92%25-green)](https://www.npmjs.com/package/redux-infinity-state) 
 
 
 ## A package for state management of react redux applications
