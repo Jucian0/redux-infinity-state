@@ -22,5 +22,20 @@ Another factor that discourages the use of Redux is when we need to deal with as
 
 The redux-infinity-state comes to solve some problems mentioned and makes Redux use easier, making your code more organized and simple.
 
+# Table of contents
+
+* [Introduction](README.md)
+* [Read Me](read-me.md)
+* [Getting started](getting-started.md)
+
+## Usage
+
+* [Creating Synchronous Handles](usage/creating-handles.md)
+* [Creating Asynchronous Handles](usage/creating-asynchronous-handles.md)
+* [Registering Handlers](usage/registering-handlers.md)
+* [In the components](usage/in-the-components.md)
+* [Add the middleware](usage/add-the-middleware.md)
+* [Testing](testing.md)
+
 ## Read me [https://juciano.gitbook.io/redux-infinity-state](https://juciano.gitbook.io/redux-infinity-state/)
 
