@@ -22,5 +22,5 @@ Another factor that discourages the use of Redux is when we need to deal with as
 
 The redux-infinity-state comes to solve some problems mentioned and makes Redux use easier, making your code more organized and simple.
 
-## Read me 
+## Read me [https://juciano.gitbook.io/redux-infinity-state](https://juciano.gitbook.io/redux-infinity-state/)
 
