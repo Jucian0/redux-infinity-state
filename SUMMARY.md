@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
+* [Read Me](read-me.md)
 * [Getting started](getting-started.md)
 
 ## Usage
