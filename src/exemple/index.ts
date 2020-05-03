@@ -23,7 +23,7 @@ const { actions } = createState({
   state: [],
   methods: {
     set,
-    remove
+    remove,
   },
   services: {
     add,
