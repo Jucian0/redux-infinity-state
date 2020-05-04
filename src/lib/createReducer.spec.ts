@@ -1,4 +1,4 @@
-import { ServiceParams } from './createState';
+import { ServiceParams, MethodParams } from './createState';
 import test from 'ava';
 import { createReducer } from './createReducer';
 
@@ -6,7 +6,7 @@ const context = {
   name: 'test',
   state: 0,
   methods: {
-    add: ({ state, payload }: ServiceParams<number, number>) => state + payload
+    add: ({ state, payload }: MethodParams<number, number>) => state + payload,
   }
 };
 
@@ -15,7 +15,7 @@ test('must return a state + payload', t => {
   t.is(result, 11);
 });
 
-test('must return a state without mutation if action type is wunknow', t => {
+test('must return a state without mutation if action type is unknown', t => {
   const result = createReducer(10, { type: '.', payload: 1 }, context);
   t.is(result, 10);
 });
