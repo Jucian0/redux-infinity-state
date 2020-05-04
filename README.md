@@ -1,6 +1,3 @@
----
-description: A package for state management of react redux applications
----
 
 # Introduction
 
@@ -11,7 +8,7 @@ description: A package for state management of react redux applications
 
 
 ## Install
-=======
+
 Redux-infinity-state is a package that aims to make application side effects and the actions easier to manage, more efficient to execute. 
 
 `yarn add redux-infinity-state`
