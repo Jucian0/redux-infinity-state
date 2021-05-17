@@ -1,7 +1,5 @@
 
-# Redux Infinity State
-
-## Implementation of redux patern
+# Redux Infinity State (just an abstraction of redux)
 
 
 ## Install
