@@ -34,6 +34,3 @@ The redux-infinity-state comes to solve some problems mentioned and makes Redux 
 * [In the components](usage/in-the-components.md)
 * [Add the middleware](usage/add-the-middleware.md)
 * [Testing](testing.md)
-
-## Read me [https://juciano.gitbook.io/redux-infinity-state](https://juciano.gitbook.io/redux-infinity-state/)
-
