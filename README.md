@@ -8,8 +8,6 @@
 
 Redux-infinity-state is a package that aims to make application side effects and the actions easier to manage, more efficient to execute. 
 
-`yarn add redux-infinity-state`
-
 ## Motivation
 
 We all know that redux is an important part of the React ecosystem, even if the application has complex flux and asynchronous actions. With Redux, the management state and data synchronization between components are eased.
